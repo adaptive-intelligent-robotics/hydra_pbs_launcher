@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# FORKED FROM: Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 # type: ignore
 from pathlib import Path
 
@@ -6,14 +6,14 @@ from read_version import read_version
 from setuptools import find_namespace_packages, setup
 
 setup(
-    name="hydra-submitit-launcher",
-    version=read_version("hydra_plugins/hydra_submitit_launcher", "__init__.py"),
-    author="Jeremy Rapin, Jieru Hu, Omry Yadan",
+    name="hydra_pbs_launcher",
+    version=read_version("hydra_plugins/hydra_pbs_launcher", "__init__.py"),
+    author="Original authors: Jeremy Rapin, Jieru Hu, Omry Yadan",
     author_email="jrapin@fb.com, jieru@fb.com, omry@fb.com",
-    description="Submitit Launcher for Hydra apps",
+    description="PBS Submitit Launcher for Hydra apps",
     long_description=(Path(__file__).parent / "README.md").read_text(),
     long_description_content_type="text/markdown",
-    url="https://github.com/facebookincubator/submitit",
+    url="https://github.com/adaptive-intelligent-robotics/hydra_pbs_launcher/",
     packages=find_namespace_packages(include=["hydra_plugins.*"]),
     classifiers=[
         "License :: OSI Approved :: MIT License",
