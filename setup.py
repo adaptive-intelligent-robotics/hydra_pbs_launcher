@@ -28,7 +28,7 @@ setup(
     ],
     install_requires=[
         "hydra-core>=1.1.0.dev7",
-        'submitit_pbs @ git+ssh://git@github.com/adaptive-intelligent-robotics/submitit_pbs@main#egg=submitit_pbs',
+        'submitit_pbs @ git+https://github.com/adaptive-intelligent-robotics/submitit_pbs@main#egg=submitit_pbs',
     ],
     include_package_data=True,
 )
