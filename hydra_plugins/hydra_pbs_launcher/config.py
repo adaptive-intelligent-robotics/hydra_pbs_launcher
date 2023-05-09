@@ -34,7 +34,7 @@ class SlurmQueueConf(BaseQueueConf):
     """Slurm configuration overrides and specific parameters"""
 
     _target_: str = (
-        "hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher"
+        "hydra_plugins.hydra_pbs_launcher.submitit_launcher.SlurmLauncher"
     )
 
     # Params are used to configure sbatch, for more info check:
@@ -78,14 +78,14 @@ class SlurmQueueConf(BaseQueueConf):
 @dataclass
 class LocalQueueConf(BaseQueueConf):
     _target_: str = (
-        "hydra_plugins.hydra_submitit_launcher.submitit_launcher.LocalLauncher"
+        "hydra_plugins.hydra_pbs_launcher.submitit_launcher.LocalLauncher"
     )
 
 
 @dataclass
 class PbsQueueConf:
     _target_: str = (
-        "hydra_plugins.hydra_submitit_launcher.submitit_launcher.PbsLauncher"
+        "hydra_plugins.hydra_pbs_launcher.submitit_launcher.PbsLauncher"
     )
     submitit_folder: str = "${hydra.sweep.dir}/.submitit/%j"
 
