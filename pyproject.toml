@@ -3,12 +3,12 @@ requires = ["setuptools", "wheel", "read-version"]
 build-backend = "setuptools.build_meta"
 
 [tool.towncrier]
-    package = "hydra_plugins.hydra_submitit_launcher"
+    package = "hydra_plugins.hydra_pbs_launcher"
     filename = "NEWS.md"
     directory = "news/"
     title_format = "{version} ({project_date})"
     template = "../../news/_template.rst"
-    issue_format = "[#{issue}](https://github.com/facebookresearch/hydra/issues/{issue})"
+    issue_format = "[#{issue}](https://github.com/adaptive-intelligent-robotics/hydra_pbs_launcher/issues/{issue})"
     start_string = "<!-- TOWNCRIER -->\n"
 
   [[tool.towncrier.type]]
