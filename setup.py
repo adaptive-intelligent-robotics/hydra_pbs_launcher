@@ -8,7 +8,7 @@ from setuptools import find_namespace_packages, setup
 setup(
     name="hydra_pbs_launcher",
     version=read_version("hydra_plugins/hydra_pbs_launcher", "__init__.py"),
-    author="Original authors: Jeremy Rapin, Jieru Hu, Omry Yadan",
+    author="Forked by Antoine Cully, Original authors: Jeremy Rapin, Jieru Hu, Omry Yadan",
     author_email="jrapin@fb.com, jieru@fb.com, omry@fb.com",
     description="PBS Submitit Launcher for Hydra apps",
     long_description=(Path(__file__).parent / "README.md").read_text(),
@@ -28,7 +28,6 @@ setup(
     ],
     install_requires=[
         "hydra-core>=1.1.0.dev7",
-        'submitit_pbs @ git+https://github.com/adaptive-intelligent-robotics/submitit_pbs@main#egg=submitit_pbs',
     ],
     include_package_data=True,
 )
