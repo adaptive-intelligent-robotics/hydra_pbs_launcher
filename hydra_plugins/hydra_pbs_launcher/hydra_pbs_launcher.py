@@ -51,7 +51,7 @@ class BaseSubmititLauncher(Launcher):
         singleton_state: Dict[type, Singleton],
     ) -> JobReturn:
         # lazy import to ensure plugin discovery remains fast
-        import submitit
+        import pbs_launcher
 
         assert self.hydra_context is not None
         assert self.config is not None
@@ -65,7 +65,7 @@ class BaseSubmititLauncher(Launcher):
 
         with open_dict(sweep_config.hydra.job) as job:
             # Populate new job variables
-            job.id = submitit.JobEnvironment().job_id  # type: ignore
+            job.id = pbs_launcher.JobEnvironment().job_id  # type: ignore
             sweep_config.hydra.job.num = job_num
 
         return run_job(
@@ -79,15 +79,15 @@ class BaseSubmititLauncher(Launcher):
     def checkpoint(self, *args: Any, **kwargs: Any) -> Any:
         """Resubmit the current callable at its current state with the same initial arguments."""
         # lazy import to ensure plugin discovery remains fast
-        import submitit
+        import pbs_launcher
 
-        return submitit.helpers.DelayedSubmission(self, *args, **kwargs)
+        return pbs_launcher.helpers.DelayedSubmission(self, *args, **kwargs)
 
     def launch(
         self, job_overrides: Sequence[Sequence[str]], initial_job_idx: int
     ) -> Sequence[JobReturn]:
         # lazy import to ensure plugin discovery remains fast
-        import submitit
+        import pbs_launcher
 
         assert self.config is not None
 
@@ -106,7 +106,7 @@ class BaseSubmititLauncher(Launcher):
             }
         )
         init_keys = specific_init_keys | {"submitit_folder"}
-        executor = submitit.AutoExecutor(cluster=self._EXECUTOR, **init_params)
+        executor = pbs_launcher.AutoExecutor(cluster=self._EXECUTOR, **init_params)
 
         # specify resources/parameters
         baseparams = set(OmegaConf.structured(BaseQueueConf).keys())
@@ -118,7 +118,7 @@ class BaseSubmititLauncher(Launcher):
         executor.update_parameters(**params)
 
         log.info(
-            f"Submitit '{self._EXECUTOR}' sweep output dir : "
+            f"Pbs_launcher '{self._EXECUTOR}' sweep output dir : "
             f"{self.config.hydra.sweep.dir}"
         )
         sweep_dir = Path(str(self.config.hydra.sweep.dir))
@@ -148,10 +148,6 @@ class BaseSubmititLauncher(Launcher):
 
 class LocalLauncher(BaseSubmititLauncher):
     _EXECUTOR = "local"
-
-
-class SlurmLauncher(BaseSubmititLauncher):
-    _EXECUTOR = "slurm"
 
 class PbsLauncher(BaseSubmititLauncher):
     _EXECUTOR = "pbs"

@@ -28,53 +28,6 @@ class BaseQueueConf:
     # redirect stderr to stdout
     stderr_to_stdout: bool = False
 
-
-@dataclass
-class SlurmQueueConf(BaseQueueConf):
-    """Slurm configuration overrides and specific parameters"""
-
-    _target_: str = (
-        "hydra_plugins.hydra_pbs_launcher.submitit_launcher.SlurmLauncher"
-    )
-
-    # Params are used to configure sbatch, for more info check:
-    # https://github.com/facebookincubator/submitit/blob/master/submitit/slurm/slurm.py
-
-    # Following parameters are slurm specific
-    # More information: https://slurm.schedmd.com/sbatch.html
-    #
-    # slurm partition to use on the cluster
-    partition: Optional[str] = None
-    qos: Optional[str] = None
-    comment: Optional[str] = None
-    constraint: Optional[str] = None
-    exclude: Optional[str] = None
-    gres: Optional[str] = None
-    cpus_per_gpu: Optional[int] = None
-    gpus_per_task: Optional[int] = None
-    mem_per_gpu: Optional[str] = None
-    mem_per_cpu: Optional[str] = None
-    account: Optional[str] = None
-
-    # Following parameters are submitit specifics
-    #
-    # USR1 signal delay before timeout
-    signal_delay_s: int = 120
-    # Maximum number of retries on job timeout.
-    # Change this only after you confirmed your code can handle re-submission
-    # by properly resuming from the latest stored checkpoint.
-    # check the following for more info on slurm_max_num_timeout
-    # https://github.com/facebookincubator/submitit/blob/master/docs/checkpointing.md
-    max_num_timeout: int = 0
-    # Useful to add parameters which are not currently available in the plugin.
-    # Eg: {"mail-user": "blublu@fb.com", "mail-type": "BEGIN"}
-    additional_parameters: Dict[str, Any] = field(default_factory=dict)
-    # Maximum number of jobs running in parallel
-    array_parallelism: int = 256
-    # A list of commands to run in sbatch befure running srun
-    setup: Optional[List[str]] = None
-
-
 @dataclass
 class LocalQueueConf(BaseQueueConf):
     _target_: str = (
@@ -111,14 +64,6 @@ ConfigStore.instance().store(
     group="hydra/launcher",
     name="submitit_local",
     node=LocalQueueConf(),
-    provider="submitit_launcher",
-)
-
-
-ConfigStore.instance().store(
-    group="hydra/launcher",
-    name="submitit_slurm",
-    node=SlurmQueueConf(),
     provider="submitit_launcher",
 )
 
